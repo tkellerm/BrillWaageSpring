@@ -146,10 +146,10 @@ public class WaageConfigurationReader {
                         // content [ Waage ]
                         if (waageBlock) {
                             if (newWaage) {
-//                            	Pr�fen,ob schon ein Waagendatensatz existiert
+//                            	Prüfen,ob schon ein Waagendatensatz existiert
                             	
                             		if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
-//                            			neue Waage anlegen und an die configuration h�ngen
+//                            			neue Waage anlegen und an die configuration hängen
 										Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer);
 										if (waageAktive) {
 											configuration.addWaage(waage);
@@ -188,7 +188,7 @@ public class WaageConfigurationReader {
 //                letzte Waage dranh�ngen
                 
 	                if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
-	//        			neue Waage anlegen und an die configuration h�ngen
+	//        			neue Waage anlegen und an die configuration hängen
 						Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer);
 						if (waageAktive) {
 							configuration.addWaage(waage);
@@ -198,7 +198,7 @@ public class WaageConfigurationReader {
             	log.error("Der Wert PORT konnte nicht in einen Integer Wert gewandelt werden" , e);
             	
                 }catch (BadAttributeValueExpException e) {
-				log.error("Die Parameter f�r die Waage sind fehlerhaft" ,e);
+				log.error("Die Parameter für die Waage sind fehlerhaft" ,e);
                 }
 
         }
