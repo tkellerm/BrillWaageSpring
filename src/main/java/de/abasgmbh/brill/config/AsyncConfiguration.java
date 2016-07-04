@@ -22,7 +22,13 @@ public class AsyncConfiguration implements AsyncConfigurer {
 
     @Override
     public Executor getAsyncExecutor() {
-        return new ThreadPoolTaskExecutor();
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(7);
+        executor.setMaxPoolSize(42);
+        executor.setQueueCapacity(11);
+        executor.setThreadNamePrefix("asyncThread-");
+        executor.initialize();
+        return executor;
     }
 
     @Override
