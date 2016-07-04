@@ -5,7 +5,7 @@
  * <p>
  * (C) Copyright abas Software AG, Karlsruhe, Germany; 2016
  */
-package de.abasgmbh.brill.controller;
+package de.abasgmbh.brill.resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;

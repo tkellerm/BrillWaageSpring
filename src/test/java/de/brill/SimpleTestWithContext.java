@@ -15,7 +15,7 @@ public class SimpleTestWithContext {
 
 	@Test
 	public void contextLoads() throws Exception {
-		Thread.sleep(3000);
+//		Thread.sleep(3000);
 	}
 
 }

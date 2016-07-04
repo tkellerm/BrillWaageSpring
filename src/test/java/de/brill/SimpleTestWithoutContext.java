@@ -15,10 +15,6 @@ public class SimpleTestWithoutContext {
 
     @Test
     public void testHeartBeat2() throws Exception {
-        HeartBeat2 hb2 = new HeartBeat2();
-        hb2.start(3);
-        Thread.sleep(3000);
-        hb2.stop();
     }
 
 }
