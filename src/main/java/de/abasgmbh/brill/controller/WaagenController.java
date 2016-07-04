@@ -22,22 +22,22 @@ public class WaagenController {
 
     @Autowired
     private Provider<HeartBeat> heartBeatProvider;
-    private HeartBeat2 hb2;
+//    private HeartBeat2 hb2;
 
     @PostConstruct
     public void startWaagenHeartbeat() {
-        HeartBeat hb = this.heartBeatProvider.get();
-        hb = this.heartBeatProvider.get();
-        hb = this.heartBeatProvider.get();
-
-        this.hb2 = new HeartBeat2();
-        this.hb2.start(3);
+//        HeartBeat hb = this.heartBeatProvider.get();
+//        hb = this.heartBeatProvider.get();
+//        hb = this.heartBeatProvider.get();
+//
+//        this.hb2 = new HeartBeat2();
+//        this.hb2.start(3);
     }
 
-    @PreDestroy
-    public void shutdown() {
-        if (this.hb2 != null) {
-            this.hb2.stop();
-        }
-    }
+//    @PreDestroy
+//    public void shutdown() {
+//        if (this.hb2 != null) {
+//            this.hb2.stop();
+//        }
+//    }
 }

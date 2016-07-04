@@ -1,28 +1,23 @@
 package de.abasgmbh.brill.config;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import javax.management.BadAttributeValueExpException;
+import java.io.*;
 
-import org.apache.log4j.Logger;
-
-
+@Component
 public class WaageConfigurationReader {
-	
-	private static Logger log = Logger.getLogger(WaageConfigurationReader.class.getName());
-   
-    
+
+    private static Logger log = Logger.getLogger(WaageConfigurationReader.class.getName());
+
+
     public Waage read(final File cfgFile) throws IOException {
         log.debug("*** reading configuration file " + cfgFile.getAbsolutePath());
-        
+
         if (cfgFile.exists() && cfgFile.isFile() && cfgFile.canRead()) {
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(cfgFile))) ) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(cfgFile)))) {
                 String line;
                 String lineWithoutWhitespace;
                 // tmp
@@ -33,15 +28,15 @@ public class WaageConfigurationReader {
                 boolean waageBlock = false;
                 boolean grenzenBlock = false;
                 boolean newWaage = false;
-                
+
                 String waageName = "";
-            	String waageIpadress = "";
-            	int waagePort = 0;
-            	Integer waageLeuchtdauer = 0; 
-            	Integer waageTextdauer = 0;
-            	Boolean waageAktive = false;
-                
-            	
+                String waageIpadress = "";
+                int waagePort = 0;
+                Integer waageLeuchtdauer = 0;
+                Integer waageTextdauer = 0;
+                Boolean waageAktive = false;
+
+
                 //
                 while ((line = br.readLine()) != null) {
                     lineWithoutWhitespace = line.replaceAll("\\s+", "").trim();
@@ -58,8 +53,8 @@ public class WaageConfigurationReader {
                     if (lineWithoutWhitespace.matches("^\\[.+\\]$")) {
                         actualBlock = lineWithoutWhitespace.replaceAll("\\[|\\]", "");
                         // reset
-                        
-                        
+
+
                         edpBlock = false;
                         waageBlock = false;
                         grenzenBlock = false;
@@ -73,21 +68,21 @@ public class WaageConfigurationReader {
                             waageBlock = false;
                             grenzenBlock = false;
                             inBlock = true;
-                        }else if (lineWithoutWhitespace.equalsIgnoreCase("[grenzen]")) {
+                        } else if (lineWithoutWhitespace.equalsIgnoreCase("[grenzen]")) {
                             // [GRENZEN]
-                        	edpBlock = false;
+                            edpBlock = false;
                             waageBlock = false;
                             grenzenBlock = true;
                             inBlock = true;
                             newWaage = false;
-						}else if (lineWithoutWhitespace.equalsIgnoreCase("[waage]")) {
-		                       // [WAAGE]
+                        } else if (lineWithoutWhitespace.equalsIgnoreCase("[waage]")) {
+                            // [WAAGE]
                             edpBlock = false;
                             waageBlock = true;
                             grenzenBlock = false;
                             inBlock = true;
-                            newWaage = true; 
-                             
+                            newWaage = true;
+
                         }
                         continue;
                     }
@@ -115,7 +110,7 @@ public class WaageConfigurationReader {
 //                                configuration.setPassword(value);
 //							} 
 //						}
-                     // content [ GRENZEN ]
+                        // content [ GRENZEN ]
 //                        if (grenzenBlock) {
 //                            if (key.equalsIgnoreCase("rot")) {
 //                                log.debug("rot: " + value);
@@ -131,83 +126,83 @@ public class WaageConfigurationReader {
                         if (waageBlock) {
                             if (newWaage) {
 //                            	Prüfen,ob schon ein Waagendatensatz existiert
-                            	
-                            		if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
+
+                                if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
 //                            			neue Waage anlegen 
-										Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive);
-										return waage;
-									}
-								}
-                
-                            	newWaage = false;
-                            	if (key.equalsIgnoreCase("name")) {
-                                    log.debug("name: " + value);
-                                    waageName = value;
-                                } else if (key.equalsIgnoreCase("ipadresse")) {
-                                    log.debug("ipadresse: " + value);
-                                    waageIpadress = value;
-                                }else if (key.equalsIgnoreCase("port")) {
-                                	log.debug("port: " + value);
-                                    waagePort = new Integer(value);
-    							}else if (key.equalsIgnoreCase("leuchtdauer")) {
-    								log.debug("leuchtdauer: " + value);
-                                    waageLeuchtdauer = new Integer(value);
-    							}else if (key.equalsIgnoreCase("textdauer")) {
-    								log.debug("textdauer: " + value);
-                                    waageTextdauer = new Integer(value);
-    							}else if (key.equalsIgnoreCase("aktiv")) {
-    								log.debug("aktiv: " + value	);
-                                    waageAktive = checkValue2Boolean(value);
-    							} 
-                            	
-							}
-                            
+                                    Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive);
+                                    return waage;
+                                }
                             }
-                        
+
+                            newWaage = false;
+                            if (key.equalsIgnoreCase("name")) {
+                                log.debug("name: " + value);
+                                waageName = value;
+                            } else if (key.equalsIgnoreCase("ipadresse")) {
+                                log.debug("ipadresse: " + value);
+                                waageIpadress = value;
+                            } else if (key.equalsIgnoreCase("port")) {
+                                log.debug("port: " + value);
+                                waagePort = new Integer(value);
+                            } else if (key.equalsIgnoreCase("leuchtdauer")) {
+                                log.debug("leuchtdauer: " + value);
+                                waageLeuchtdauer = new Integer(value);
+                            } else if (key.equalsIgnoreCase("textdauer")) {
+                                log.debug("textdauer: " + value);
+                                waageTextdauer = new Integer(value);
+                            } else if (key.equalsIgnoreCase("aktiv")) {
+                                log.debug("aktiv: " + value);
+                                waageAktive = checkValue2Boolean(value);
+                            }
+
+                        }
+
                     }
-                
-//                letzte Waage dranh�ngen
-                
-	                if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
-	//        			neue Waage anlegen und an die configuration hängen
-						Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer , waageAktive);
-						return waage;
-	                }
-                }catch (NumberFormatException e) {
-            	log.error("Der Wert PORT konnte nicht in einen Integer Wert gewandelt werden" , e);
-            	
-                }catch (BadAttributeValueExpException e) {
-				log.error("Die Parameter für die Waage sind fehlerhaft" ,e);
+
                 }
+
+//                letzte Waage dranh�ngen
+
+                if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
+                    //        			neue Waage anlegen und an die configuration hängen
+                    Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive);
+                    return waage;
+                }
+            } catch (NumberFormatException e) {
+                log.error("Der Wert PORT konnte nicht in einen Integer Wert gewandelt werden", e);
+
+            } catch (BadAttributeValueExpException e) {
+                log.error("Die Parameter für die Waage sind fehlerhaft", e);
+            }
 
         }
         log.debug("*** read configuration file " + cfgFile.getAbsolutePath());
-        
-        throw new IOException("Es wurde keine Waage in dem Config-File "+  cfgFile.getAbsolutePath() + " gefunden");
-        
+
+        throw new IOException("Es wurde keine Waage in dem Config-File " + cfgFile.getAbsolutePath() + " gefunden");
+
     }
-    
-    
+
+
     private Boolean checkValue2Boolean(String value) throws BadAttributeValueExpException {
-    	Boolean bool;
-    	if (value.equals("1")) {
-			bool = true;
-		}else if (value.equals("0")) {
-			bool = false;
-		}else if (value.equalsIgnoreCase("ja")) {
-			bool = true;
-		}else if (value.equalsIgnoreCase("nein")) {
-			bool = false;
-		}else if (value.equalsIgnoreCase("true")) {
-			bool = true;
-		}else if (value.equalsIgnoreCase("false")) {
-			bool = false;
-		}else {
-			throw new BadAttributeValueExpException("Für Aktiv bitte nur 1,0, ja, nein, true, false in dem Konfig-File angeben!/n Nicht " + value);
-		}
-    	
-    	return bool;  	
-	}
+        Boolean bool;
+        if (value.equals("1")) {
+            bool = true;
+        } else if (value.equals("0")) {
+            bool = false;
+        } else if (value.equalsIgnoreCase("ja")) {
+            bool = true;
+        } else if (value.equalsIgnoreCase("nein")) {
+            bool = false;
+        } else if (value.equalsIgnoreCase("true")) {
+            bool = true;
+        } else if (value.equalsIgnoreCase("false")) {
+            bool = false;
+        } else {
+            throw new BadAttributeValueExpException("Für Aktiv bitte nur 1,0, ja, nein, true, false in dem Konfig-File angeben!/n Nicht " + value);
+        }
+
+        return bool;
+    }
 
 
 }
