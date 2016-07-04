@@ -9,14 +9,16 @@ public class Waage {
 	int port;
 	Integer leuchtdauer = 5000 ;
 	Integer textdauer = 5000;  
+	Boolean isActive;
 	
-	public Waage(String name, String ipadress, int port, Integer leuchtdauer, Integer textdauer) throws BadAttributeValueExpException {
+	public Waage(String name, String ipadress, int port, Integer leuchtdauer, Integer textdauer, Boolean isActive) throws BadAttributeValueExpException {
 		
 		if (name!= null & ipadress != null ) {
 			if (!name.isEmpty() & !ipadress.isEmpty() & port>0) {
 				this.name = name;
 				this.ipadress = ipadress;
 				this.port = port;
+				this.isActive = isActive;
 //				Die Leuchtdauer soll nur vom DefaultWert 5000ms geändert werden, wenn der übergebene Wert >0  ist
 				if (leuchtdauer !=null) {
 					if (leuchtdauer > 0) {

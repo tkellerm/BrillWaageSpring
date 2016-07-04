@@ -15,31 +15,9 @@ import org.apache.log4j.Logger;
 public class WaageConfigurationReader {
 	
 	private static Logger log = Logger.getLogger(WaageConfigurationReader.class.getName());
-
-    private WaageConfiguration configuration = WaageConfiguration.getInstance();
-
-    String waageName;
-	String waageIpadress;
-	int waagePort;
-	Integer waageLeuchtdauer;
-	Integer waageTextdauer;
-	Boolean waageAktive;
+   
     
-    
-    
-    
-    private WaageConfigurationReader() {
-    }
-
-    private static class GetActionConfig {
-        private static final WaageConfigurationReader INSTANCE = new WaageConfigurationReader();
-    }
-
-    public static WaageConfigurationReader getInstance() {
-        return GetActionConfig.INSTANCE;
-    }
-    
-    public void read(final File cfgFile) throws IOException {
+    public Waage read(final File cfgFile) throws IOException {
         log.debug("*** reading configuration file " + cfgFile.getAbsolutePath());
         
         if (cfgFile.exists() && cfgFile.isFile() && cfgFile.canRead()) {
@@ -56,8 +34,14 @@ public class WaageConfigurationReader {
                 boolean grenzenBlock = false;
                 boolean newWaage = false;
                 
-            	waageVarsleeren();
+                String waageName = "";
+            	String waageIpadress = "";
+            	int waagePort = 0;
+            	Integer waageLeuchtdauer = 0; 
+            	Integer waageTextdauer = 0;
+            	Boolean waageAktive = false;
                 
+            	
                 //
                 while ((line = br.readLine()) != null) {
                     lineWithoutWhitespace = line.replaceAll("\\s+", "").trim();
@@ -81,8 +65,8 @@ public class WaageConfigurationReader {
                         grenzenBlock = false;
                         inBlock = false;
 
-                        String test = lineWithoutWhitespace;
-                        Boolean testb = lineWithoutWhitespace.equalsIgnoreCase(test);
+//                        String test = lineWithoutWhitespace;
+//                        Boolean testb = lineWithoutWhitespace.equalsIgnoreCase(test);
                         if (lineWithoutWhitespace.equalsIgnoreCase("[edpparameter]")) {
                             // [EDPPARAMETER]
                             edpBlock = true;
@@ -115,46 +99,43 @@ public class WaageConfigurationReader {
                         String key = line.substring(0, line.indexOf('=') - 1).trim();
                         String value = line.substring(line.indexOf('=') + 1).trim();
                         // content [ EDPPARAMETER ]
-                        if (edpBlock) {
-                            if (key.equalsIgnoreCase("server")) {
-                                log.debug("server: " + value);
-                                configuration.setEdpServer(value);
-                            } else if (key.equalsIgnoreCase("port")) {
-                                log.debug("port: " + value);
-                                Integer integerValue = new Integer(value);
-                                configuration.setPort(integerValue);
-                            }else if (key.equalsIgnoreCase("mandant")) {
-                            	log.debug("mandant: " + value);
-                                configuration.setMandant(value);
-							}else if (key.equalsIgnoreCase("passwort")) {
-								log.debug("passwort: " + value);
-                                configuration.setPassword(value);
-							} 
-						}
+//                        if (edpBlock) {
+//                            if (key.equalsIgnoreCase("server")) {
+//                                log.debug("server: " + value);
+//                                configuration.setEdpServer(value);
+//                            } else if (key.equalsIgnoreCase("port")) {
+//                                log.debug("port: " + value);
+//                                Integer integerValue = new Integer(value);
+//                                configuration.setPort(integerValue);
+//                            }else if (key.equalsIgnoreCase("mandant")) {
+//                            	log.debug("mandant: " + value);
+//                                configuration.setMandant(value);
+//							}else if (key.equalsIgnoreCase("passwort")) {
+//								log.debug("passwort: " + value);
+//                                configuration.setPassword(value);
+//							} 
+//						}
                      // content [ GRENZEN ]
-                        if (grenzenBlock) {
-                            if (key.equalsIgnoreCase("rot")) {
-                                log.debug("rot: " + value);
-                                Double rotGrenze = new Double(value);
-                                configuration.setRotGrenze(rotGrenze);
-                            } else if (key.equalsIgnoreCase("gelb")) {
-                                log.debug("gelb: " + value);
-                                Double gelbGrenze = new Double(value);
-                                configuration.setGelbGrenze(gelbGrenze);
-                            } 
-						}
+//                        if (grenzenBlock) {
+//                            if (key.equalsIgnoreCase("rot")) {
+//                                log.debug("rot: " + value);
+//                                Double rotGrenze = new Double(value);
+//                                configuration.setRotGrenze(rotGrenze);
+//                            } else if (key.equalsIgnoreCase("gelb")) {
+//                                log.debug("gelb: " + value);
+//                                Double gelbGrenze = new Double(value);
+//                                configuration.setGelbGrenze(gelbGrenze);
+//                            } 
+//						}
                         // content [ Waage ]
                         if (waageBlock) {
                             if (newWaage) {
 //                            	Prüfen,ob schon ein Waagendatensatz existiert
                             	
                             		if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
-//                            			neue Waage anlegen und an die configuration hängen
-										Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer);
-										if (waageAktive) {
-											configuration.addWaage(waage);
-										}
-										waageVarsleeren();
+//                            			neue Waage anlegen 
+										Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive);
+										return waage;
 									}
 								}
                 
@@ -189,10 +170,8 @@ public class WaageConfigurationReader {
                 
 	                if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
 	//        			neue Waage anlegen und an die configuration hängen
-						Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer);
-						if (waageAktive) {
-							configuration.addWaage(waage);
-						}
+						Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer , waageAktive);
+						return waage;
 	                }
                 }catch (NumberFormatException e) {
             	log.error("Der Wert PORT konnte nicht in einen Integer Wert gewandelt werden" , e);
@@ -203,6 +182,9 @@ public class WaageConfigurationReader {
 
         }
         log.debug("*** read configuration file " + cfgFile.getAbsolutePath());
+        
+        throw new IOException("Es wurde keine Waage in dem Config-File "+  cfgFile.getAbsolutePath() + " gefunden");
+        
     }
     
     
@@ -227,23 +209,5 @@ public class WaageConfigurationReader {
     	return bool;  	
 	}
 
-	private void waageVarsleeren() {
-    	this.waageName = "";
-    	this.waageIpadress = "" ;
-    	this.waagePort = 0;
-    	this.waageLeuchtdauer = 0;
-    	this.waageTextdauer = 0;
-    	this.waageAktive = false;
-		
-	}
-   public WaageConfiguration getConfiguration(){
-	if (this.configuration != null) {
-		return this.configuration;	
-	}else {
-		throw new NullPointerException("Die Configuration wurde noch nicht eingelesen!");
-	}   
-	   
-	
-	   
-   }
+
 }
