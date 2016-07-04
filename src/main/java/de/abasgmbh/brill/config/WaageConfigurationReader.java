@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.Map.Entry;
+
 
 import javax.management.BadAttributeValueExpException;
 
@@ -148,10 +146,10 @@ public class WaageConfigurationReader {
                         // content [ Waage ]
                         if (waageBlock) {
                             if (newWaage) {
-//                            	Prüfen,ob schon ein Waagendatensatz existiert
+//                            	Prï¿½fen,ob schon ein Waagendatensatz existiert
                             	
                             		if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
-//                            			neue Waage anlegen und an die configuration hängen
+//                            			neue Waage anlegen und an die configuration hï¿½ngen
 										Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer);
 										if (waageAktive) {
 											configuration.addWaage(waage);
@@ -187,10 +185,10 @@ public class WaageConfigurationReader {
                         
                     }
                 
-//                letzte Waage dranhängen
+//                letzte Waage dranhï¿½ngen
                 
 	                if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
-	//        			neue Waage anlegen und an die configuration hängen
+	//        			neue Waage anlegen und an die configuration hï¿½ngen
 						Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer);
 						if (waageAktive) {
 							configuration.addWaage(waage);
@@ -200,7 +198,7 @@ public class WaageConfigurationReader {
             	log.error("Der Wert PORT konnte nicht in einen Integer Wert gewandelt werden" , e);
             	
                 }catch (BadAttributeValueExpException e) {
-				log.error("Die Parameter für die Waage sind fehlerhaft" ,e);
+				log.error("Die Parameter fï¿½r die Waage sind fehlerhaft" ,e);
                 }
 
         }
@@ -223,7 +221,7 @@ public class WaageConfigurationReader {
 		}else if (value.equalsIgnoreCase("false")) {
 			bool = false;
 		}else {
-			throw new BadAttributeValueExpException("Für Aktiv bitte nur 1,0, ja, nein, true, false in dem Konfig-File angeben!/n Nicht " + value);
+			throw new BadAttributeValueExpException("FÃ¼r Aktiv bitte nur 1,0, ja, nein, true, false in dem Konfig-File angeben!/n Nicht " + value);
 		}
     	
     	return bool;  	
