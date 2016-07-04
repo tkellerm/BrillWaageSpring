@@ -45,5 +45,6 @@
 	<classpathentry kind="lib" path="C:/Users/tkellermann.ABASAG/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.1.7/7873092d39ef741575ca91378a6a21c388363ac8/logback-core-1.1.7.jar" sourcepath="C:/Users/tkellermann.ABASAG/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.1.7/15a62dbee75aadf62b7d35640533262d764b29d3/logback-core-1.1.7-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/tkellermann.ABASAG/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.21/139535a69a4239db087de9bab0bee568bf8e0b70/slf4j-api-1.7.21.jar" sourcepath="C:/Users/tkellermann.ABASAG/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.21/f285ac123f201fb4b028bac556928d7cf527ef48/slf4j-api-1.7.21-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="privatelibs/jedp.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

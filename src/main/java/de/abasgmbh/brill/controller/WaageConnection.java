@@ -5,7 +5,7 @@
  * <p>
  * (C) Copyright abas Software AG, Karlsruhe, Germany; 2016
  */
-package de.brill.controller;
+package de.abasgmbh.brill.controller;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;

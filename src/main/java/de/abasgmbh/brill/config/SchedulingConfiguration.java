@@ -5,7 +5,7 @@
  * <p>
  * (C) Copyright abas Software AG, Karlsruhe, Germany; 2016
  */
-package de.brill.config;
+package de.abasgmbh.brill.config;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

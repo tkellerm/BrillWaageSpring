@@ -5,7 +5,7 @@
  * <p>
  * (C) Copyright abas Software AG, Karlsruhe, Germany; 2016
  */
-package de.brill.controller;
+package de.abasgmbh.brill.controller;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

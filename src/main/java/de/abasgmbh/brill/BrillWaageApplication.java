@@ -1,4 +1,4 @@
-package de.brill;
+package de.abasgmbh.brill;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
