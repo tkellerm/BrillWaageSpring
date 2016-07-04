@@ -17,7 +17,7 @@ public class Waage {
 				this.name = name;
 				this.ipadress = ipadress;
 				this.port = port;
-//				Die Leuchtdauer soll nur vom DefaultWert 5000ms geändert werden, wenn der übergebene Wert >0  ist
+//				Die Leuchtdauer soll nur vom DefaultWert 5000ms geÃ¤ndert werden, wenn der Ã¼bergebene Wert >0  ist
 				if (leuchtdauer !=null) {
 					if (leuchtdauer > 0) {
 						this.leuchtdauer = leuchtdauer;
@@ -31,7 +31,7 @@ public class Waage {
 			}
 		}else {
 			
-			throw new BadAttributeValueExpException("Der Name ist nicht gefüllt");
+			throw new BadAttributeValueExpException("Der Name ist nicht gefÃ¼llt");
 		}
 		
 		

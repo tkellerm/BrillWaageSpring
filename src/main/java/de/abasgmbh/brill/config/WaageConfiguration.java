@@ -57,8 +57,8 @@ public class WaageConfiguration {
 			
 			
 		}else {		
-			log.error("Der EDPserver : " + edpServer +  " ,Port : " + port + " ,Mandant : " + mandant + " Password (Länge=" + password.length() +  "dürfen nicht leersein" );
-			throw new BadAttributeValueExpException("Der edpServer, Port, mandant und password dürfen nicht leer sein");
+			log.error("Der EDPserver : " + edpServer +  " ,Port : " + port + " ,Mandant : " + mandant + " Password (LÃ¤nge=" + password.length() +  "dÃ¼rfen nicht leer sein" );
+			throw new BadAttributeValueExpException("Der edpServer, Port, mandant und password dÃ¼rfen nicht leer sein");
 		}
 		
 	}
@@ -89,7 +89,7 @@ public class WaageConfiguration {
 				return this.waagenListe.get(waagennummer);	
 			}else {
 				
-			    String errorText = "Die Waagennummer " + waagennummer + "ist größer als die Größe der Liste";
+			    String errorText = "Die Waagennummer " + waagennummer + "ist grÃ¶ÃŸer als die GrÃ¶ÃŸe der Liste";
 				log.error(errorText);
 				throw new BadAttributeValueExpException(errorText);
 			}
@@ -179,7 +179,7 @@ public class WaageConfiguration {
 			if (test.exists()) {
 				return true;
 			}else {
-				log.trace("pid-File " + test.getAbsolutePath() + " auch bei der 2. Prüfung nicht ist da " + test.exists());
+				log.trace("pid-File " + test.getAbsolutePath() + " auch bei der 2. PrÃ¼fung nicht ist da " + test.exists());
 				return false;
 			}
 		}
