@@ -11,7 +11,23 @@ public class Waage {
 	Integer textdauer = 5000;  
 	Boolean isActive;
 	
-	public Waage(String name, String ipadress, int port, Integer leuchtdauer, Integer textdauer, Boolean isActive) throws BadAttributeValueExpException {
+	Double rotGrenze;
+    Double gelbGrenze;
+
+	
+	public Double getRotGrenze() {
+		return rotGrenze;
+	}
+
+	public Double getGelbGrenze() {
+		return gelbGrenze;
+	}
+
+	public void setTextdauer(Integer textdauer) {
+		this.textdauer = textdauer;
+	}
+
+	public Waage(String name, String ipadress, int port, Integer leuchtdauer, Integer textdauer, Boolean isActive, Double gelbGrenze , Double rotGrenze) throws BadAttributeValueExpException {
 		
 		if (name!= null & ipadress != null ) {
 			if (!name.isEmpty() & !ipadress.isEmpty() & port>0) {
