@@ -7,29 +7,53 @@
  */
 package de.brill.heartbeat;
 
+import de.abasgmbh.brill.controller.WaageConnection;
+import de.abasgmbh.brill.controller.WaagenController;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class HeartBeat {
 
-    public HeartBeat() {
-        Logger.getLogger(HeartBeat.class).info("created");
+    Logger log = Logger.getLogger(HeartBeat.class);
+    private boolean run = true;
+
+    @Value("${heartbeat.delay}")
+    private long heartBeatDelay;
+
+    @Async
+    public void start(WaageConnection wconn, WaagenController wctrl) {
+        try {
+            while(this.run) {
+                Logger.getLogger(HeartBeat.class).info("ping to waage " + wconn.getWaage().getName());
+                sleep();
+                wconn.writeString(getPingCmd());
+            }
+        } catch (IOException e) {
+            log.error("connection unterbrochen zu waage " + wconn.getWaage().getName());
+            wctrl.stop();
+        }
     }
 
-    @Scheduled(initialDelay = 1, fixedDelay=1000)
-    private void pingpong() {
-        Logger.getLogger(HeartBeat.class).info("ping");
+    public void stop() {
+        this.run = false;
+    }
+
+    private void sleep() {
         try {
-            Thread.sleep(500);
+            Thread.sleep(this.heartBeatDelay);
         } catch (InterruptedException e) {
             // ignore it
         }
-        Logger.getLogger(HeartBeat.class).info("pong");
     }
-
+    private String getPingCmd() {
+        return "ping";
+    }
 }

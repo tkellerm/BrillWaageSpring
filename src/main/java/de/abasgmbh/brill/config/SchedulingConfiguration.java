@@ -35,6 +35,6 @@ public class SchedulingConfiguration implements SchedulingConfigurer {
     }
 
     private ThreadFactory withMyThreadFactory() {
-        return new CustomizableThreadFactory("heartbeat-");
+        return new CustomizableThreadFactory("scheduler-");
     }
 }

@@ -14,10 +14,16 @@ import de.abasgmbh.brill.config.Waage;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class WaageReader {
 
     private Logger log = Logger.getLogger(WaagenController.class);
@@ -25,19 +31,17 @@ public class WaageReader {
     private final String ANFANGS_ZEICHEN =  Character.toString((char)2);
 	private final String ENDE_ZEICHEN =  Character.toString((char)3);
 
-    private final Waage waage;
-    private final WaageConnection wconn;
+    private Waage waage;
+    private WaageConnection wconn;
     
     @Autowired
     AbasRueckmeldung abasrueckmeldung;
-    
-    public WaageReader(Waage waage, WaageConnection wconn) {
+
+    @Async
+    public void start(Waage waage, WaageConnection wconn, WaagenController wctrl) {
         this.waage = waage;
         this.wconn = wconn;
-    }
 
-    public void start() throws EDPException {
-    	
     	String waageName = this.waage.getName();
     	ArrayList<String> rueckschlange = new ArrayList<String>();
     	
@@ -123,6 +127,7 @@ public class WaageReader {
         	
         } catch (IOException e) {
             log.error(e);
+			wctrl.stop();
             
         }
 

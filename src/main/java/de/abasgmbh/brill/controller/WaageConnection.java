@@ -22,6 +22,7 @@ public class WaageConnection {
     private Socket socket;
     private BufferedReader reader;
     private BufferedWriter writer;
+    private WaageWriteMutex mutex = new WaageWriteMutex();
 
     public WaageConnection(Waage waage) {
         this.waage = waage;
@@ -32,9 +33,11 @@ public class WaageConnection {
     }
 
     public void writeString(String s) throws IOException {
-        this.writer.append(s);
-        this.writer.newLine();
-        this.writer.flush();
+        synchronized (this.mutex) {
+            this.writer.append(s);
+            this.writer.newLine();
+            this.writer.flush();
+        }
     }
 
     public void connect() throws Exception {
@@ -84,4 +87,10 @@ public class WaageConnection {
         return this.socket != null && this.socket.isConnected() && !this.socket.isOutputShutdown() && !this.socket.isClosed();
     }
 
+    public Waage getWaage() {
+        return this.waage;
+    }
+
+    class WaageWriteMutex {
+    }
 }
