@@ -35,6 +35,8 @@ public class WaageConfigurationReader {
                 Integer waageLeuchtdauer = 0;
                 Integer waageTextdauer = 0;
                 Boolean waageAktive = false;
+                Double waageRotGrenze = new Double(0);
+                Double waageGelbGrenze = new Double(0);
 
 
                 //
@@ -129,7 +131,7 @@ public class WaageConfigurationReader {
 
                                 if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
 //                            			neue Waage anlegen 
-                                    Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive);
+                                    Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive, waageGelbGrenze , waageRotGrenze );
                                     return waage;
                                 }
                             }
@@ -153,11 +155,18 @@ public class WaageConfigurationReader {
                             } else if (key.equalsIgnoreCase("aktiv")) {
                                 log.debug("aktiv: " + value);
                                 waageAktive = checkValue2Boolean(value);
-                            }
+                            }else if (key.equalsIgnoreCase("rotgrenze")) {
+                            	  log.debug("rotGrenze: " + value);
+                                  waageRotGrenze = new Double(value);     
+                            } else if (key.equalsIgnoreCase("gelbgrenze")) {
+                                  log.debug("gelbGrenze: " + value);
+                                  waageGelbGrenze = new Double(value);
+                              } 
+							}
 
                         }
 
-                    }
+                    
 
                 }
 
@@ -165,9 +174,9 @@ public class WaageConfigurationReader {
 
                 if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
                     //        			neue Waage anlegen und an die configuration hängen
-                    Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive);
+                    Waage waage = new Waage(waageName, waageIpadress, waagePort, waageLeuchtdauer, waageTextdauer, waageAktive, waageGelbGrenze , waageRotGrenze);
                     return waage;
-                }
+                } 
             } catch (NumberFormatException e) {
                 log.error("Der Wert PORT konnte nicht in einen Integer Wert gewandelt werden", e);
 
