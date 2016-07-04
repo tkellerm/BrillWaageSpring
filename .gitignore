@@ -2,3 +2,5 @@ build
 .gradle
 .idea
 bin
+*.ipr
+*.iws
