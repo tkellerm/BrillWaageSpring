@@ -5,7 +5,7 @@
  * <p>
  * (C) Copyright abas Software AG, Karlsruhe, Germany; 2016
  */
-package de.brill.heartbeat;
+package de.abasgmbh.brill.heartbeat;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

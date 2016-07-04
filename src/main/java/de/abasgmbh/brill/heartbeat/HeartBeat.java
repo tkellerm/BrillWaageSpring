@@ -5,7 +5,7 @@
  * <p>
  * (C) Copyright abas Software AG, Karlsruhe, Germany; 2016
  */
-package de.brill.heartbeat;
+package de.abasgmbh.brill.heartbeat;
 
 import de.abasgmbh.brill.controller.WaageConnection;
 import de.abasgmbh.brill.controller.WaagenController;

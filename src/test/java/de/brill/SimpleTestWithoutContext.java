@@ -9,7 +9,7 @@ package de.brill;
 
 import org.junit.Test;
 
-import de.brill.heartbeat.HeartBeat2;
+import de.abasgmbh.brill.heartbeat.HeartBeat2;
 
 public class SimpleTestWithoutContext {
 
