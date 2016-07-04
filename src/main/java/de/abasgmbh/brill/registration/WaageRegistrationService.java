@@ -9,12 +9,14 @@ package de.abasgmbh.brill.registration;
 
 import de.abasgmbh.brill.config.Waage;
 import de.abasgmbh.brill.config.WaageConfigurationReader;
+import de.abasgmbh.brill.controller.WaagenController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Provider;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,6 +30,9 @@ public class WaageRegistrationService {
 
     @Autowired
     private WaageConfigurationReader configReader;
+
+    @Autowired
+    private Provider<WaagenController> waagenControllerProvider;
 
     @Value("${waage.config.dir}")
     private String configDir;
@@ -67,9 +72,11 @@ public class WaageRegistrationService {
     }
 
     private void startWaageConnection(Waage waageCfg) {
-    	
-    	log.info(waageCfg.getName());
-    	
+    	if (waageCfg.isActive()) {
+            log.info(waageCfg.getName());
+            WaagenController wctrl = this.waagenControllerProvider.get();
+            wctrl.start(waageCfg);
+        }
     }
 
     public void register(String waageName) {

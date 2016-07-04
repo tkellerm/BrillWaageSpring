@@ -7,38 +7,77 @@
  */
 package de.abasgmbh.brill.controller;
 
+import de.abasgmbh.brill.config.Waage;
+import org.apache.log4j.Logger;
+
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class WaageConnection {
 
-    final private String host = "host";
-    final private int port = 20000;
-    private Socket socket;
+    Logger log = Logger.getLogger(WaageConnection.class);
 
-    public void start() {
-        try {
-            this.socket = new Socket();
-            this.socket.setTcpNoDelay(true);
-            this.socket.connect(sockAddr());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private Waage waage;
+    private Socket socket;
+    private BufferedReader reader;
+    private BufferedWriter writer;
+
+    public WaageConnection(Waage waage) {
+        this.waage = waage;
     }
 
-    public void stop() {
+    public String readline() throws IOException {
+        return this.reader.readLine();
+    }
+
+    public void writeString(String s) throws IOException {
+        this.writer.append(s);
+        this.writer.newLine();
+        this.writer.flush();
+    }
+
+    public void connect() throws Exception {
+        this.socket = new Socket();
+        this.socket.setTcpNoDelay(true);
+        this.socket.connect(sockAddr());
+        this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+        this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+    }
+
+    public void disconnect() {
         try {
             this.socket.shutdownOutput();
+        } catch (Exception e) {
+            log.warn("error on shutdownOutput ", e);
+        }
+        try {
             this.socket.shutdownInput();
+        } catch (Exception e) {
+            log.warn("error on shutdownInput ", e);
+        }
+        try {
             this.socket.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("error on close ", e);
         }
         this.socket = null;
+        try {
+            this.reader.close();
+        } catch (IOException e) {
+            log.warn(e);
+        }
+        this.reader = null;
+        try {
+            this.writer.close();
+        } catch (IOException e) {
+            log.warn(e);
+        }
+        this.writer = null;
     }
 
     private InetSocketAddress sockAddr() {
-        return new InetSocketAddress(this.host, this.port);
+        return new InetSocketAddress(this.waage.getIpadress(), this.waage.getPort());
     }
 
     public boolean isConnected() {

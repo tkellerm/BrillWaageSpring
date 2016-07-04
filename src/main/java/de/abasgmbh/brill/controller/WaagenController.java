@@ -7,37 +7,36 @@
  */
 package de.abasgmbh.brill.controller;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.inject.Provider;
-
+import de.abasgmbh.brill.config.Waage;
+import de.brill.heartbeat.HeartBeat;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import de.brill.heartbeat.HeartBeat;
-import de.brill.heartbeat.HeartBeat2;
+import javax.inject.Provider;
 
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class WaagenController {
 
-    @Autowired
-    private Provider<HeartBeat> heartBeatProvider;
-//    private HeartBeat2 hb2;
+    Logger log = Logger.getLogger(WaagenController.class);
 
-    @PostConstruct
-    public void startWaagenHeartbeat() {
-//        HeartBeat hb = this.heartBeatProvider.get();
-//        hb = this.heartBeatProvider.get();
-//        hb = this.heartBeatProvider.get();
-//
-//        this.hb2 = new HeartBeat2();
-//        this.hb2.start(3);
+    private WaageConnection wconn;
+    private WaageReader wreader;
+
+    public void start(Waage waage) {
+        this.wconn = new WaageConnection(waage);
+        try {
+            this.wconn.connect();
+            this.wreader = new WaageReader(waage, wconn);
+            this.wreader.start();
+
+        } catch (Exception e) {
+            log.error("can not connect to waage: " + waage.getName(), e);
+        }
     }
 
-//    @PreDestroy
-//    public void shutdown() {
-//        if (this.hb2 != null) {
-//            this.hb2.stop();
-//        }
-//    }
+
 }
