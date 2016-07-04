@@ -29,10 +29,16 @@ public class WaageConnection {
     }
 
     public String readline() throws IOException {
+        if (reader == null) {
+            throw new IOException("reader allready closed");
+        }
         return this.reader.readLine();
     }
 
     public void writeString(String s) throws IOException {
+        if (this.writer == null) {
+            return;
+        }
         synchronized (this.mutex) {
             this.writer.append(s);
             this.writer.newLine();

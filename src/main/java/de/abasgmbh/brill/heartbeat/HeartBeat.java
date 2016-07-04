@@ -30,11 +30,12 @@ public class HeartBeat {
 
     @Async
     public void start(WaageConnection wconn, WaagenController wctrl) {
+        sleep();
         try {
             while(this.run) {
                 Logger.getLogger(HeartBeat.class).info("ping to waage " + wconn.getWaage().getName());
-                sleep();
                 wconn.writeString(getPingCmd());
+                sleep();
             }
         } catch (IOException e) {
             log.error("connection unterbrochen zu waage " + wconn.getWaage().getName());
