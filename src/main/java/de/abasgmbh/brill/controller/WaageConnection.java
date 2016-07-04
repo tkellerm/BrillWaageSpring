@@ -32,7 +32,9 @@ public class WaageConnection {
         if (reader == null) {
             throw new IOException("reader allready closed");
         }
-        return this.reader.readLine();
+        String s = this.reader.readLine();
+        log.info(this.waage.getName() + " : " + s);
+        return s;
     }
 
     public void writeString(String s) throws IOException {
@@ -43,6 +45,7 @@ public class WaageConnection {
             this.writer.append(s);
             this.writer.newLine();
             this.writer.flush();
+            log.info(this.waage.getName() + " : " + s);
         }
     }
 
@@ -97,6 +100,7 @@ public class WaageConnection {
         return this.waage;
     }
 
+//    Nur zum Synchronisieren 
     class WaageWriteMutex {
     }
 }
