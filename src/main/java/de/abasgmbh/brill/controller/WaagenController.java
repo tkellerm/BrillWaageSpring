@@ -41,10 +41,7 @@ public class WaagenController {
     private HeartBeat heartBeat;
 
     public void start(Waage waage) {
-        if (!this.stopped.compareAndSet(true, false)) {
-            // bereits gestartet
-            return;
-        }
+        this.stopped.set(false);
         this.waage = waage;
         this.registrationService.register(waage.getName());
         this.wconn = new WaageConnection(waage);

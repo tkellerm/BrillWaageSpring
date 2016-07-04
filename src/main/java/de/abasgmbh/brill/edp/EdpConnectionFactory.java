@@ -21,6 +21,7 @@ import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.EDPVariableLanguage;
 import de.abasgmbh.brill.registration.WaageRegistrationService;
 
+import de.abasgmbh.brill.utils.Utils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -81,17 +82,10 @@ public class EdpConnectionFactory {
     	  			log.trace("Session wurde aufgebaut");
                     edpSession.setVariableLanguage(EDPVariableLanguage.ENGLISH);
                     
-    	  		} catch (CantBeginSessionException ex) 
-    	  			{
+    	  		} catch (CantBeginSessionException ex) {
     	  			log.error("EDP-Session kann nicht gestartet werden!" , ex);
-    	  			try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-//						ignorieren
-					}
-    	  			}
-                 
-    	  		
+					Utils.sleep(1000);
+    	  		}
     }
     
     @PreDestroy

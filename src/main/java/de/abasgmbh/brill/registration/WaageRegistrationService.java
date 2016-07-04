@@ -73,7 +73,7 @@ public class WaageRegistrationService {
 
     private void startWaageConnection(Waage waageCfg) {
     	if (waageCfg.isActive()) {
-            log.info(waageCfg.getName());
+            log.info("start connection to waage: " + waageCfg.getName());
             WaagenController wctrl = this.waagenControllerProvider.get();
             wctrl.start(waageCfg);
         }
