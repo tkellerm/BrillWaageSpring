@@ -7,6 +7,8 @@
  */
 package de.abasgmbh.brill.edp;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.PostConstruct;
@@ -72,6 +74,7 @@ public class EdpConnectionFactory {
     { 
 			log.trace("Session wird versucht aufzubauen Server: " + server + " Port : " + port + " Mandant : " + mandant + " Passwort : " + passwort);
     	  		try {
+    	  			 new File("java/log/").mkdirs();
     	  			edpSession.loggingOn("java/log/waageEdp.log");
     	  			edpSession.setConnectTimeout(TIMEOUT);
     	  			edpSession.beginSession(server , port, mandant, passwort, "Waage");
