@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_FILE" value="waage.log"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <logger name="sample.logback" level="DEBUG" />
+    <springProfile name="staging">
+        <logger name="de.abasgmbh.brill" level="TRACE" />
+    </springProfile>
+</configuration>
