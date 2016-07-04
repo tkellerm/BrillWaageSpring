@@ -134,15 +134,22 @@ public class WaageReader {
     }
 
 	private void verarbeiteteRueckmeldungsSchlange(
-			ArrayList<String> rueckschlange) throws EDPException, IOException {
+			ArrayList<String> rueckschlange) throws IOException {
 
 		for (String rueckMeldungString : rueckschlange) {
 
 			Rueckmeldung rueckMeldung = new Rueckmeldung(rueckMeldungString);
 			
 	        if (rueckMeldung.isRueckmeldung()) {
-	        	rueckMeldung = this.abasrueckmeldung.meldung(rueckMeldung , this.waage);
-	        	Integer led = rueckMeldung.getLed(); 
+	        	
+	        	try {
+					rueckMeldung = this.abasrueckmeldung.meldung(rueckMeldung,
+							this.waage);
+				} catch (EDPException e) {
+					log.error(waage.getName() + "Rueckmeldung anlegen schiefgelaufen!" , e);
+					fehlerAnWaage("Rueckmeldung nicht erfolgreich");
+				}
+				Integer led = rueckMeldung.getLed(); 
 	            switch (led) {
 				case 1:
 	//				grüne Lampe anschalten
@@ -218,6 +225,7 @@ public class WaageReader {
 	
 	}
 	  private void sendMessage(String s) throws IOException {
+		  
 		  wconn.writeString(s);
 	  }
 	
