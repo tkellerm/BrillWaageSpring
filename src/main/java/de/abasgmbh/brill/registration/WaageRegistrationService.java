@@ -67,7 +67,9 @@ public class WaageRegistrationService {
     }
 
     private void startWaageConnection(Waage waageCfg) {
-
+    	
+    	log.info(waageCfg.getName());
+    	
     }
 
     public void register(String waageName) {
