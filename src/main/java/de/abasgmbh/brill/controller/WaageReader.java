@@ -119,10 +119,15 @@ public class WaageReader {
 						}
 
 					}
-
+					
+					verarbeiteteRueckmeldungsSchlange(rueckschlange);
+				}else {
+					errorFlag=true;
+					log.error("String null Verbindung abgebrochen!");
+					wctrl.stop();
 				}
 				
-				verarbeiteteRueckmeldungsSchlange(rueckschlange);
+				
 			}
         	
         } catch (IOException e) {
