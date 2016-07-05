@@ -35,6 +35,7 @@ public class AbasRueckmeldung  {
 		Integer wert = 0;
 		
 		EDPSession edpSession = this.edpConnectionFactory.getSession();
+		try{
 		EDPEditor editor = edpSession.createEditor();
 		erzeugeRueckmeldung(rueckMeldung , editor);
 		EDPQuery query = edpSession.createQuery();
@@ -51,7 +52,11 @@ public class AbasRueckmeldung  {
 		}
 		rueckMeldung.setLed(wert);
 		log.trace("Rückgabe Meldung : Prozent :" + prozent + " rotGrenze : " + waage.getRotGrenze().toString() + "gelbGrenze : " + waage.getGelbGrenze().toString() +"  R�ckgabe Wert :" + wert);
+		
 		return rueckMeldung ;
+		}finally{
+			this.edpConnectionFactory.releaseSession(edpSession);
+		}
 	}
 	
 	private Double selectOffeneMengeBa(Rueckmeldung rueckMeldung, EDPQuery query) throws EDPException {
@@ -128,7 +133,7 @@ public class AbasRueckmeldung  {
 				editor.endEditCancel();
 			}
 		}
-		log.trace("Ende EDP-EDITOR f�r R�ckmeldung " + asnum );
+		log.trace("Ende EDP-EDITOR für Rückmeldung " + asnum );
 	}
 
 		
