@@ -170,7 +170,7 @@ public class WaageConfigurationReader {
 
                 }
 
-//                letzte Waage dranh�ngen
+//                letzte Waage dranhängen
 
                 if (!waageName.isEmpty() & !waageIpadress.isEmpty() & waagePort != 0) {
                     //        			neue Waage anlegen und an die configuration hängen
