@@ -8,24 +8,22 @@
 package de.abasgmbh.brill.edp;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import de.abas.ceks.jedp.CantBeginSessionException;
 import de.abas.ceks.jedp.CantReadSettingException;
 import de.abas.ceks.jedp.EDPFactory;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.EDPVariableLanguage;
-import de.abasgmbh.brill.registration.WaageRegistrationService;
-
 import de.abasgmbh.brill.utils.Utils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 @Component
 public class EdpConnectionFactory {
@@ -69,7 +67,9 @@ public class EdpConnectionFactory {
         return edpSession;
     }
     
-    
+    public void releaseSession(EDPSession session){
+    	session.endSession();
+    }
     
     private void sessionAufbauen(String server, int port, String mandant, String passwort , EDPSession edpSession)   
     { 
