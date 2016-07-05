@@ -114,8 +114,8 @@ public class WaageReader {
 								}
 							}
 						} else {
-							log.error("Die Variable inputstring ist null.Es erfolgt einreconnect");
-							//						Todo: reconnect = true;
+							log.error("Die Variable inputstring ist null. Es erfolgt einreconnect");
+							wctrl.stop();
 						}
 
 					}
