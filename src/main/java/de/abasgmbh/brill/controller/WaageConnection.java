@@ -33,7 +33,7 @@ public class WaageConnection {
             throw new IOException("reader allready closed");
         }
         String s = this.reader.readLine();
-        log.info(this.waage.getName() + " : " + s);
+        log.info(this.waage.getName() + " <- " + s);
         return s;
     }
 
@@ -45,7 +45,7 @@ public class WaageConnection {
             this.writer.append(s);
             this.writer.newLine();
             this.writer.flush();
-            log.info(this.waage.getName() + " : " + s);
+            log.info(this.waage.getName() + " -> " + s);
         }
     }
 
