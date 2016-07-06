@@ -27,7 +27,7 @@ public class AbasRueckmeldung  {
 	@Autowired 
 	EdpConnectionFactory edpConnectionFactory;
 	
-	private static Logger log = Logger.getLogger(AbasRueckmeldung.class.getName());
+	private static Logger log = Logger.getLogger(AbasRueckmeldung.class);
 	
 	
 	
