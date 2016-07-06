@@ -88,7 +88,7 @@ if [ $stopping == true ]; then
   wget http://localhost:9080/shutdown/ 
 else
 #  $JAVAPATH/bin/java -Dlog4j.configuration=file:${waage_logging_props} ${debugString}  -jar /home/waage/libs/waage-0.0.1.jar &
-  $JAVAPATH/bin/java  ${debugString}  -jar /home/waage/libs/waage-0.0.1-SNAPSHOT.jar &
+  $JAVAPATH/bin/java  ${debugString}  -jar /home/waageSpring/waage-0.0.1.jar &
 fi
 
 exit 0
