@@ -4,3 +4,4 @@ build
 bin
 *.ipr
 *.iws
+java/log
