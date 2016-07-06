@@ -121,6 +121,7 @@ public class WaageReader {
 					}
 					
 					verarbeiteteRueckmeldungsSchlange(rueckschlange);
+					rueckschlange.clear();
 				}else {
 					errorFlag=true;
 					log.error("String null Verbindung abgebrochen!");
