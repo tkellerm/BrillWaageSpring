@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_FILE" value="waage.log"/>
+    <property name="LOG_FILE" value="java/log/waageSpring.log"/>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
 
     <logger name="sample.logback" level="DEBUG" />
