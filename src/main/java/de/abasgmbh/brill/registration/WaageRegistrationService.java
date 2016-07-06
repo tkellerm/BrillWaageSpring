@@ -47,7 +47,13 @@ public class WaageRegistrationService {
             Files.walk(Paths.get(configDir)).forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
                     //Todo: pruefen ob der name passt
-                    performFilePath(filePath);
+                	if (filePath.toFile().getName().startsWith("waage")) {
+                		performFilePath(filePath);	
+                		log.info("Config-Datei: " + filePath.toFile().getName() );
+					}else {
+						log.info("Die Datei " + filePath.toFile().getName() + " ist keine Config-Datei und wird nicht verarbeitet");
+					}
+                    
                 }
             });
         } catch (Exception e) {
