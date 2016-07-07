@@ -150,38 +150,38 @@ public class WaageReader {
 	        	
 	        	try {
 					rueckMeldung = this.abasrueckmeldung.meldung(rueckMeldung,
-							this.waage);
-				} catch (EDPException e) {
+								this.waage);
+					
+					Integer led = rueckMeldung.getLed(); 
+		            switch (led) {
+					case 1:
+		//				grüne Lampe anschalten
+						rueckmeldungAnWaageSenden(LEDS.GREEN,rueckMeldung.getOfMenge());
+						break;
+					case 2:
+		//				gelbe Lampe anschalten
+						rueckmeldungAnWaageSenden(LEDS.YELLOW,rueckMeldung.getOfMenge());
+						break;
+					case 3:
+		//				rote Lampe anschalten
+						rueckmeldungAnWaageSenden(LEDS.RED,rueckMeldung.getOfMenge());
+						break;
+					case 4:
+		//				leiser Piepser anschalten
+						rueckmeldungAnWaageSenden(LEDS.PIEPSLEISE,rueckMeldung.getOfMenge());
+						break;
+					case 5:
+		//				lauter Piepser anschalten
+						rueckmeldungAnWaageSenden(LEDS.PIEPSLAUT,rueckMeldung.getOfMenge());
+						break;	
+					default:
+						log.info("Break in Case Wert LED : " + led );
+						break;
+					}
+	        	} catch (EDPException e) {
 					log.error(waage.getName() + "Rueckmeldung anlegen schiefgelaufen!" , e);
 					fehlerAnWaage("Rueckmeldung nicht erfolgreich");
 				}
-				Integer led = rueckMeldung.getLed(); 
-	            switch (led) {
-				case 1:
-	//				grüne Lampe anschalten
-					rueckmeldungAnWaageSenden(LEDS.GREEN,rueckMeldung.getOfMenge());
-					break;
-				case 2:
-	//				gelbe Lampe anschalten
-					rueckmeldungAnWaageSenden(LEDS.YELLOW,rueckMeldung.getOfMenge());
-					break;
-				case 3:
-	//				rote Lampe anschalten
-					rueckmeldungAnWaageSenden(LEDS.RED,rueckMeldung.getOfMenge());
-					break;
-				case 4:
-	//				leiser Piepser anschalten
-					rueckmeldungAnWaageSenden(LEDS.PIEPSLEISE,rueckMeldung.getOfMenge());
-					break;
-				case 5:
-	//				lauter Piepser anschalten
-					rueckmeldungAnWaageSenden(LEDS.PIEPSLAUT,rueckMeldung.getOfMenge());
-					break;	
-				default:
-					log.info("Break in Case Wert LED : " + led );
-					break;
-				}
-	        	
 			}
         }
 		
