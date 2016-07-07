@@ -51,7 +51,8 @@ public class WaageReader {
         	
         	
         	while (!errorFlag) {
-				String line = wconn.readline();
+//				String line = wconn.readline();
+				String line = wconn.read();
 				log.info(waageName + " von Waage : " + line);
 				
 				if (line != null) {

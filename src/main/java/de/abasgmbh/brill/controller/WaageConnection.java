@@ -8,6 +8,7 @@
 package de.abasgmbh.brill.controller;
 
 import de.abasgmbh.brill.config.Waage;
+
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -36,7 +37,22 @@ public class WaageConnection {
         log.info(this.waage.getName() + " <- " + s);
         return s;
     }
-
+    
+    public String read() throws IOException{
+    	
+    		if (reader == null) {
+                throw new IOException("reader allready closed");
+            }
+    		
+            String data = "";
+            int s = reader.read();
+            if(s==-1)
+                return null;
+            data += ""+(char)s;
+            
+            return data;
+    }
+    
     public void writeString(String s) throws IOException {
         if (this.writer == null) {
             return;
