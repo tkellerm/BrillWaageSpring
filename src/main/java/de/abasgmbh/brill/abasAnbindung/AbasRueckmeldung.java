@@ -37,7 +37,7 @@ public class AbasRueckmeldung  {
 		EDPSession edpSession = this.edpConnectionFactory.getSession();
 		try{
 		EDPEditor editor = edpSession.createEditor();
-		erzeugeRueckmeldung(rueckMeldung , editor);
+		erzeugeRueckmeldung(rueckMeldung , editor , waage);
 		EDPQuery query = edpSession.createQuery();
 		Double prozent = selectOffeneMengeBa(rueckMeldung, query); 
 		if (prozent > waage.getGelbGrenze()) {
@@ -99,7 +99,7 @@ public class AbasRueckmeldung  {
 		
 	}
 
-	private void erzeugeRueckmeldung(Rueckmeldung rueckMeldung, EDPEditor editor) throws EDPException {
+	private void erzeugeRueckmeldung(Rueckmeldung rueckMeldung, EDPEditor editor, Waage waage) throws EDPException {
 		
 		
 	        String databaseName = "9";
@@ -112,7 +112,8 @@ public class AbasRueckmeldung  {
 		
 //		Bemerkung füllen 
 		try {
-			editor.setFieldVal("comments" , "Nr: " + rueckMeldung.getLaufendeNummer() + " W: " + rueckMeldung.getWaagenNummer() + " NG: " + rueckMeldung.getNettoGewicht().toString() + " refG: " + rueckMeldung.getRefgewicht().toString() );
+//			editor.setFieldVal("comments" , "Nr: " + rueckMeldung.getLaufendeNummer() + " W: " + rueckMeldung.getWaagenNummer() + " NG: " + rueckMeldung.getNettoGewicht().toString() + " refG: " + rueckMeldung.getRefgewicht().toString() );
+			editor.setFieldVal("comments" , "Nr: " + rueckMeldung.getLaufendeNummer() + " W: " + waage.getName() + " NG: " + rueckMeldung.getNettoGewicht().toString() + " refG: " + rueckMeldung.getRefgewicht().toString() );
 			editor.setFieldVal("printImmediately", "1");
 			if (editor.getRowCount() == 0) {
 				editor.insertRow(1);		
