@@ -49,6 +49,6 @@ public class HeartBeat {
     }
 
     private String getPingCmd() {
-        return "<NO100>";
+        return "<NO>";
     }
 }
