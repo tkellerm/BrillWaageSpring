@@ -22,12 +22,14 @@ import de.abasgmbh.brill.edp.EdpConnectionFactory;
 @Component 
 public class AbasRueckmeldung  {
 
+	private static Logger log = Logger.getLogger(AbasRueckmeldung.class);
+	
 //	Holt aus der EdpFactory die EdpSession
 	
 	@Autowired 
 	EdpConnectionFactory edpConnectionFactory;
 	
-	private static Logger log = Logger.getLogger(AbasRueckmeldung.class);
+	
 	
 	
 	
